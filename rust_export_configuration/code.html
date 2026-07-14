@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ENGINE_CORE | Export to Rust</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#353534",
+                        "on-secondary-container": "#003f38",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "inverse-primary": "#aa3606",
+                        "on-error": "#690005",
+                        "surface-dim": "#131313",
+                        "on-tertiary-fixed-variant": "#004c68",
+                        "on-secondary-fixed-variant": "#005048",
+                        "on-secondary": "#003731",
+                        "tertiary-fixed-dim": "#79d1ff",
+                        "primary": "#ffb59d",
+                        "on-tertiary-container": "#002d40",
+                        "secondary-container": "#04b4a2",
+                        "tertiary": "#79d1ff",
+                        "surface-container-lowest": "#0e0e0e",
+                        "primary-fixed-dim": "#ffb59d",
+                        "surface-tint": "#ffb59d",
+                        "on-background": "#e5e2e1",
+                        "outline": "#a78a81",
+                        "on-primary-container": "#521400",
+                        "surface-container-high": "#2a2a2a",
+                        "inverse-on-surface": "#313030",
+                        "secondary-fixed": "#71f8e4",
+                        "inverse-surface": "#e5e2e1",
+                        "tertiary-fixed": "#c3e8ff",
+                        "surface-container": "#201f1f",
+                        "surface-variant": "#353534",
+                        "outline-variant": "#58413a",
+                        "on-primary-fixed-variant": "#832600",
+                        "on-primary": "#5d1800",
+                        "primary-container": "#ee6737",
+                        "on-error-container": "#ffdad6",
+                        "background": "#131313",
+                        "primary-fixed": "#ffdbd0",
+                        "on-surface-variant": "#e0bfb6",
+                        "error-container": "#93000a",
+                        "error": "#ffb4ab",
+                        "surface-bright": "#3a3939",
+                        "surface": "#131313",
+                        "on-primary-fixed": "#390b00",
+                        "tertiary-container": "#189bcd",
+                        "surface-container-low": "#1c1b1b",
+                        "on-tertiary": "#003549",
+                        "on-secondary-fixed": "#00201c",
+                        "secondary": "#4fdbc8",
+                        "on-tertiary-fixed": "#001e2c",
+                        "on-surface": "#e5e2e1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"],
+                        "mono": ["JetBrains Mono"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #131313;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #353534;
+        }
+        .code-gradient {
+            background: linear-gradient(135deg, rgba(28, 27, 27, 1) 0%, rgba(19, 19, 19, 1) 100%);
+        }
+        .cta-gradient {
+            background: linear-gradient(135deg, #ffb59d 0%, #ee6737 100%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<div class="flex h-screen overflow-hidden">
+<!-- SideNavBar Component -->
+<aside class="hidden md:flex h-screen w-64 flex flex-col bg-[#201F1F] text-[#E5E2E1] border-none font-['Space_Grotesk'] font-medium uppercase tracking-widest text-[10px] py-6 shrink-0">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-8 h-8 bg-[#E66132] flex items-center justify-center rounded-sm">
+<span class="material-symbols-outlined text-background !text-lg" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<div>
+<div class="text-[#E66132] font-black text-sm tracking-tighter">ENGINE_CORE</div>
+<div class="opacity-40 text-[8px] tracking-widest">v1.0.4-stable</div>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<div class="text-on-surface-variant px-6 py-2 opacity-30 text-[8px]">Navigation</div>
+<div class="flex items-center gap-4 px-6 py-3 text-[#E5E2E1] opacity-60 hover:opacity-100 hover:bg-[#353534] hover:text-[#E66132] cursor-pointer transition-all duration-150">
+<span class="material-symbols-outlined !text-sm">keyboard</span>
+<span>Shortcuts</span>
+</div>
+<div class="flex items-center gap-4 px-6 py-3 text-[#4FDBC8] border-l-2 border-[#4FDBC8] bg-[#2A2A2A] cursor-pointer transition-all duration-150">
+<span class="material-symbols-outlined !text-sm">code</span>
+<span>Development</span>
+</div>
+<div class="flex items-center gap-4 px-6 py-3 text-[#E5E2E1] opacity-60 hover:opacity-100 hover:bg-[#353534] hover:text-[#E66132] cursor-pointer transition-all duration-150">
+<span class="material-symbols-outlined !text-sm">palette</span>
+<span>Design</span>
+</div>
+<div class="flex items-center gap-4 px-6 py-3 text-[#E5E2E1] opacity-60 hover:opacity-100 hover:bg-[#353534] hover:text-[#E66132] cursor-pointer transition-all duration-150">
+<span class="material-symbols-outlined !text-sm">settings_suggest</span>
+<span>System</span>
+</div>
+<div class="flex items-center gap-4 px-6 py-3 text-[#E5E2E1] opacity-60 hover:opacity-100 hover:bg-[#353534] hover:text-[#E66132] cursor-pointer transition-all duration-150">
+<span class="material-symbols-outlined !text-sm">cloud_queue</span>
+<span>Cloud</span>
+</div>
+</nav>
+<div class="mt-auto px-6 space-y-4">
+<button class="w-full cta-gradient text-on-primary py-3 rounded-sm font-bold text-[10px] active:scale-95 transition-transform">
+                    Export Rust/Tauri
+                </button>
+<div class="pt-4 border-t border-outline-variant/20 space-y-1">
+<div class="flex items-center gap-4 py-2 text-[#E5E2E1] opacity-60 hover:opacity-100 hover:bg-[#353534] hover:text-[#E66132] cursor-pointer transition-all duration-150">
+<span class="material-symbols-outlined !text-sm">menu_book</span>
+<span>Docs</span>
+</div>
+<div class="flex items-center gap-4 py-2 text-[#E5E2E1] opacity-60 hover:opacity-100 hover:bg-[#353534] hover:text-[#E66132] cursor-pointer transition-all duration-150">
+<span class="material-symbols-outlined !text-sm">logout</span>
+<span>Logout</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Workspace -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden bg-surface">
+<!-- TopNavBar Component -->
+<header class="w-full h-14 bg-[#131313] flex justify-between items-center px-6 shrink-0 z-10">
+<div class="flex items-center gap-6">
+<h1 class="text-lg font-bold tracking-tighter text-[#E66132] font-['Space_Grotesk']">DEVELOPMENT / EXPORT</h1>
+<div class="hidden lg:flex items-center bg-[#1C1B1B] rounded-sm px-3 py-1.5 gap-2 border border-outline-variant/10">
+<span class="material-symbols-outlined text-on-surface-variant !text-sm">search</span>
+<input class="bg-transparent border-none text-[12px] text-on-surface focus:ring-0 w-64 placeholder:opacity-30 font-label" placeholder="Search configuration..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1">
+<button class="p-2 text-[#E5E2E1] hover:bg-[#2A2A2A] transition-colors duration-200 active:scale-95">
+<span class="material-symbols-outlined !text-lg">settings</span>
+</button>
+<button class="p-2 text-[#E5E2E1] hover:bg-[#2A2A2A] transition-colors duration-200 active:scale-95">
+<span class="material-symbols-outlined !text-lg">terminal</span>
+</button>
+<button class="p-2 text-[#E5E2E1] hover:bg-[#2A2A2A] transition-colors duration-200 active:scale-95 relative">
+<span class="material-symbols-outlined !text-lg">notifications</span>
+<span class="absolute top-2 right-2 w-1.5 h-1.5 bg-[#E66132] rounded-full"></span>
+</button>
+</div>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant/30">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="Close up portrait of a male developer in a dark room with soft blue screen light reflecting on his face" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVjXLOFAqaJIsBQl3aV8c-6O8BZCrCIvmlAr8IMgqF5O2i7LVyXMfJbcvuJabcKG1Y_aZI6-pgn4PZGfBnJtoLznKokmtWdG-E5O3GSGElyOxAiVIWSykbBWQKFswTfNY3_oNi0E0sLG5IsKj4tyJXNB1FlvoP7KTp79AlYuTME-ZK0decruULr88MqpUinDmAlGa8iOmx4z7P3QC3ayWKJIc9po4S7BigNLButBZiGKEelqmkjVWLA9iI5NKgYeUxYezuJVX6PDo"/>
+</div>
+</div>
+</header>
+<!-- Export Stage -->
+<div class="flex-1 overflow-y-auto p-6 lg:p-8 space-y-8">
+<div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Controls -->
+<div class="lg:col-span-5 space-y-8">
+<div>
+<h2 class="font-headline text-3xl font-bold tracking-tight text-on-surface mb-2">Export Configuration</h2>
+<p class="text-on-surface-variant font-body text-sm opacity-70">Generate optimized Rust bindings for your Tauri application shortcuts.</p>
+</div>
+<!-- Section: Format -->
+<section class="space-y-4">
+<h3 class="font-label text-[10px] uppercase tracking-[0.2em] text-secondary font-bold">01. Output Format</h3>
+<div class="grid grid-cols-3 gap-2">
+<button class="flex flex-col items-center justify-center p-4 bg-surface-container-high border-b-2 border-secondary text-on-surface rounded-sm transition-all">
+<span class="font-mono text-xs font-bold">TOML</span>
+<span class="text-[9px] opacity-40 mt-1">Cargo Default</span>
+</button>
+<button class="flex flex-col items-center justify-center p-4 bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high rounded-sm transition-all">
+<span class="font-mono text-xs font-bold">JSON</span>
+<span class="text-[9px] opacity-40 mt-1">Universal</span>
+</button>
+<button class="flex flex-col items-center justify-center p-4 bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high rounded-sm transition-all">
+<span class="font-mono text-xs font-bold">YAML</span>
+<span class="text-[9px] opacity-40 mt-1">Human Readable</span>
+</button>
+</div>
+</section>
+<!-- Section: Directory -->
+<section class="space-y-4">
+<h3 class="font-label text-[10px] uppercase tracking-[0.2em] text-secondary font-bold">02. Target Directory</h3>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest border-none border-b-2 border-surface-container-highest focus:border-secondary transition-all text-sm font-mono p-4 pr-12 focus:ring-0" type="text" value="~/projects/engine-app/src-tauri/config"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant/40 !text-xl">folder_open</span>
+</div>
+</section>
+<!-- Section: Options -->
+<section class="space-y-4">
+<h3 class="font-label text-[10px] uppercase tracking-[0.2em] text-secondary font-bold">03. Compilation Flags</h3>
+<div class="space-y-3">
+<label class="flex items-center justify-between p-4 bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex flex-col">
+<span class="text-sm font-medium">Include Metadata</span>
+<span class="text-[10px] opacity-40">Add timestamps and environment info</span>
+</div>
+<input checked="" class="rounded-sm bg-surface-container-highest border-none text-secondary focus:ring-offset-background focus:ring-secondary" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-4 bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex flex-col">
+<span class="text-sm font-medium">Minify Output</span>
+<span class="text-[10px] opacity-40">Strip whitespace and comments</span>
+</div>
+<input class="rounded-sm bg-surface-container-highest border-none text-secondary focus:ring-offset-background focus:ring-secondary" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-4 bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-colors group border-l-2 border-primary/40">
+<div class="flex flex-col">
+<span class="text-sm font-medium">Generate Rust Structs</span>
+<span class="text-[10px] opacity-40">Create shortcuts.rs with Serde support</span>
+</div>
+<input checked="" class="rounded-sm bg-surface-container-highest border-none text-secondary focus:ring-offset-background focus:ring-secondary" type="checkbox"/>
+</label>
+</div>
+</section>
+<div class="pt-4">
+<button class="w-full cta-gradient text-on-primary py-5 rounded-sm font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3 active:scale-[0.98] transition-all shadow-xl shadow-primary/10">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">file_download</span>
+                                Export Configuration
+                            </button>
+</div>
+</div>
+<!-- Right Column: Code Preview -->
+<div class="lg:col-span-7 flex flex-col min-h-[500px]">
+<div class="flex items-center justify-between px-4 py-3 bg-surface-container-highest rounded-t-sm border-b border-surface-dim">
+<div class="flex items-center gap-3">
+<div class="flex gap-1.5">
+<div class="w-2.5 h-2.5 rounded-full bg-error opacity-40"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-secondary opacity-40"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-tertiary opacity-40"></div>
+</div>
+<span class="text-[10px] font-mono opacity-50 uppercase ml-4">shortcuts.toml — Preview</span>
+</div>
+<div class="flex gap-4">
+<button class="text-on-surface-variant hover:text-secondary transition-colors">
+<span class="material-symbols-outlined !text-sm">content_copy</span>
+</button>
+<button class="text-on-surface-variant hover:text-secondary transition-colors">
+<span class="material-symbols-outlined !text-sm">fullscreen</span>
+</button>
+</div>
+</div>
+<div class="flex-1 code-gradient p-6 font-mono text-[13px] leading-relaxed overflow-auto border border-t-0 border-surface-container-highest shadow-inner">
+<div class="space-y-1">
+<p><span class="text-tertiary"># EngineCore Config</span></p>
+<p><span class="text-tertiary"># Generated: 2023-10-27 14:32:01</span></p>
+<br/>
+<p><span class="text-primary-container">[package]</span></p>
+<p><span class="text-primary">name</span> = <span class="text-secondary">"engine-shortcuts"</span></p>
+<p><span class="text-primary">version</span> = <span class="text-secondary">"1.0.4"</span></p>
+<br/>
+<p><span class="text-primary-container">[[shortcuts]]</span></p>
+<p><span class="text-primary">id</span> = <span class="text-secondary">"open_terminal"</span></p>
+<p><span class="text-primary">key</span> = <span class="text-secondary">"Ctrl+Alt+T"</span></p>
+<p><span class="text-primary">action</span> = <span class="text-secondary">"spawn_cmd"</span></p>
+<p><span class="text-primary">args</span> = [<span class="text-secondary">"wt.exe"</span>]</p>
+<br/>
+<p><span class="text-primary-container">[[shortcuts]]</span></p>
+<p><span class="text-primary">id</span> = <span class="text-secondary">"build_project"</span></p>
+<p><span class="text-primary">key</span> = <span class="text-secondary">"Cmd+Shift+B"</span></p>
+<p><span class="text-primary">action</span> = <span class="text-secondary">"run_script"</span></p>
+<p><span class="text-primary">args</span> = [<span class="text-secondary">"cargo build"</span>]</p>
+<br/>
+<p><span class="text-primary-container">[metadata]</span></p>
+<p><span class="text-primary">environment</span> = <span class="text-secondary">"development"</span></p>
+<p><span class="text-primary">strict_mode</span> = <span class="text-tertiary">true</span></p>
+<p><span class="text-primary">log_level</span> = <span class="text-secondary">"trace"</span></p>
+</div>
+</div>
+<div class="mt-4 p-4 bg-surface-container-low rounded-sm flex items-center justify-between border border-surface-container-highest/20">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="text-[10px] font-mono uppercase tracking-widest text-on-surface-variant">Ready for export</span>
+</div>
+<div class="flex items-center gap-4 text-[10px] font-mono opacity-40">
+<span>LINES: 24</span>
+<span>SIZE: 1.2KB</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Contextual Status Bar -->
+<footer class="h-8 bg-surface-container flex items-center px-6 border-t border-surface-container-highest shrink-0">
+<div class="flex items-center gap-6 w-full text-[10px] font-mono uppercase tracking-widest text-on-surface-variant/60">
+<div class="flex items-center gap-2">
+<span class="text-secondary">●</span>
+<span>connected: engine-daemon</span>
+</div>
+<div class="flex items-center gap-2">
+<span>target: x86_64-pc-windows-msvc</span>
+</div>
+<div class="ml-auto flex items-center gap-4">
+<span class="hover:text-primary cursor-pointer transition-colors">v1.0.4-stable</span>
+<span class="material-symbols-outlined !text-xs">share</span>
+</div>
+</div>
+</footer>
+</main>
+</div>
+</body></html>

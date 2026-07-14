@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PrecisionEngine | Shortcut Manager</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline": "#a78a81",
+                    "surface-container-highest": "#353534",
+                    "surface-container-high": "#2a2a2a",
+                    "on-secondary-container": "#003f38",
+                    "primary": "#ffb59d",
+                    "surface-variant": "#353534",
+                    "on-secondary": "#003731",
+                    "surface-container-lowest": "#0e0e0e",
+                    "on-tertiary-fixed": "#001e2c",
+                    "on-secondary-fixed": "#00201c",
+                    "on-tertiary-container": "#002d40",
+                    "surface": "#131313",
+                    "background": "#131313",
+                    "primary-fixed-dim": "#ffb59d",
+                    "on-primary-fixed-variant": "#832600",
+                    "surface-container": "#201f1f",
+                    "surface-bright": "#3a3939",
+                    "on-primary": "#5d1800",
+                    "tertiary-container": "#189bcd",
+                    "surface-container-low": "#1c1b1b",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "on-tertiary": "#003549",
+                    "on-surface-variant": "#e0bfb6",
+                    "tertiary-fixed": "#c3e8ff",
+                    "on-background": "#e5e2e1",
+                    "primary-container": "#ee6737",
+                    "surface-dim": "#131313",
+                    "error-container": "#93000a",
+                    "secondary-fixed": "#71f8e4",
+                    "surface-tint": "#ffb59d",
+                    "tertiary": "#79d1ff",
+                    "error": "#ffb4ab",
+                    "on-error-container": "#ffdad6",
+                    "on-surface": "#e5e2e1",
+                    "outline-variant": "#58413a",
+                    "inverse-surface": "#e5e2e1",
+                    "on-error": "#690005",
+                    "on-secondary-fixed-variant": "#005048",
+                    "on-primary-fixed": "#390b00",
+                    "secondary-container": "#04b4a2",
+                    "tertiary-fixed-dim": "#79d1ff",
+                    "secondary": "#4fdbc8",
+                    "on-tertiary-fixed-variant": "#004c68",
+                    "primary-fixed": "#ffdbd0",
+                    "inverse-primary": "#aa3606",
+                    "on-primary-container": "#521400",
+                    "inverse-on-surface": "#313030"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Space Grotesk"],
+                    "body": ["Inter"],
+                    "label": ["Space Grotesk"],
+                    "mono": ["JetBrains Mono"]
+            }
+          },
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .kbd-shim {
+            box-shadow: 0 1px 0 0 rgba(167, 138, 129, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-secondary/30 selection:text-secondary">
+<div class="flex h-screen overflow-hidden">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 docked-left bg-[#201F1F] flex flex-col border-r-0">
+<div class="p-6">
+<div class="text-[#E66132] font-black uppercase tracking-tighter text-2xl font-headline">ENGINE_CORE</div>
+<div class="text-on-surface-variant/40 text-[10px] font-mono mt-1 tracking-[0.2em]">v2.4.0-stable</div>
+</div>
+<div class="px-3 mt-4">
+<button class="w-full py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold text-xs uppercase tracking-widest rounded-sm flex items-center justify-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-sm">add</span>
+                    New Shortcut
+                </button>
+</div>
+<nav class="mt-8 flex-1 overflow-y-auto space-y-1">
+<!-- All Shortcuts is active -->
+<div class="text-[#4FDBC8] border-l-2 border-[#4FDBC8] bg-[#2A2A2A] px-6 py-3 flex items-center gap-3 cursor-pointer transition-all font-label text-sm uppercase tracking-widest">
+<span class="material-symbols-outlined" data-icon="keyboard">keyboard</span>
+<span>All Shortcuts</span>
+</div>
+<div class="text-[#E5E2E1]/50 hover:text-[#E5E2E1] hover:bg-[#2A2A2A] px-6 py-3 flex items-center gap-3 cursor-pointer transition-all font-label text-sm uppercase tracking-widest">
+<span class="material-symbols-outlined" data-icon="code">code</span>
+<span>Development</span>
+</div>
+<div class="text-[#E5E2E1]/50 hover:text-[#E5E2E1] hover:bg-[#2A2A2A] px-6 py-3 flex items-center gap-3 cursor-pointer transition-all font-label text-sm uppercase tracking-widest">
+<span class="material-symbols-outlined" data-icon="palette">palette</span>
+<span>Design</span>
+</div>
+<div class="text-[#E5E2E1]/50 hover:text-[#E5E2E1] hover:bg-[#2A2A2A] px-6 py-3 flex items-center gap-3 cursor-pointer transition-all font-label text-sm uppercase tracking-widest">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+<span>System</span>
+</div>
+<div class="text-[#E5E2E1]/50 hover:text-[#E5E2E1] hover:bg-[#2A2A2A] px-6 py-3 flex items-center gap-3 cursor-pointer transition-all font-label text-sm uppercase tracking-widest">
+<span class="material-symbols-outlined" data-icon="cloud_queue">cloud_queue</span>
+<span>Cloud</span>
+</div>
+</nav>
+<div class="mt-auto pb-8 space-y-1">
+<div class="text-[#E5E2E1]/50 hover:text-[#E5E2E1] hover:bg-[#2A2A2A] px-6 py-3 flex items-center gap-3 cursor-pointer transition-all font-label text-sm uppercase tracking-widest">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span>Documentation</span>
+</div>
+<div class="text-[#E5E2E1]/50 hover:text-[#E5E2E1] hover:bg-[#2A2A2A] px-6 py-3 flex items-center gap-3 cursor-pointer transition-all font-label text-sm uppercase tracking-widest">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span>Support</span>
+</div>
+</div>
+</aside>
+<!-- Main Workspace -->
+<main class="flex-1 flex flex-col bg-[#131313] overflow-hidden">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center px-6 py-3 w-full bg-[#131313] border-none">
+<div class="flex items-center gap-6 flex-1 max-w-2xl">
+<div class="relative w-full max-w-md group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/40 group-focus-within:text-secondary transition-colors">search</span>
+<input class="w-full bg-surface-container-high border-none border-b-2 border-transparent focus:border-secondary focus:ring-0 text-sm font-body px-10 py-2 rounded-sm transition-all placeholder:text-on-surface-variant/30" placeholder="Search shortcuts..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+<span class="text-[10px] font-headline uppercase tracking-widest text-on-surface-variant/40">Recent Activity</span>
+<div class="flex gap-2">
+<div class="px-2 py-1 bg-surface-container-highest rounded-sm border border-outline-variant/10 flex items-center gap-2 hover:bg-surface-bright transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-xs text-secondary" style="font-variation-settings: 'FILL' 1;">terminal</span>
+<span class="text-[10px] font-mono text-on-surface/70 group-hover:text-on-surface">npm i</span>
+</div>
+<div class="px-2 py-1 bg-surface-container-highest rounded-sm border border-outline-variant/10 flex items-center gap-2 hover:bg-surface-bright transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-xs text-secondary" style="font-variation-settings: 'FILL' 1;">code</span>
+<span class="text-[10px] font-mono text-on-surface/70 group-hover:text-on-surface">Commit</span>
+</div>
+<div class="px-2 py-1 bg-surface-container-highest rounded-sm border border-outline-variant/10 flex items-center gap-2 hover:bg-surface-bright transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-xs text-secondary" style="font-variation-settings: 'FILL' 1;">palette</span>
+<span class="text-[10px] font-mono text-on-surface/70 group-hover:text-on-surface">Auto-Layout</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant/60">
+<span class="material-symbols-outlined cursor-pointer hover:text-on-surface transition-colors" data-icon="history">history</span>
+<div class="relative">
+<span class="material-symbols-outlined cursor-pointer hover:text-on-surface transition-colors" data-icon="notifications">notifications</span>
+<div class="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full"></div>
+</div>
+<span class="material-symbols-outlined cursor-pointer hover:text-on-surface transition-colors" data-icon="settings">settings</span>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant/20">
+<img alt="User Workspace Profile" class="w-full h-full object-cover" data-alt="Professional headshot of a developer in high-contrast cinematic lighting with a dark blurred background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDn96wQ3tbjVyjKwsK9T8PQ-kgWZz8NSqX7oTH9PpuXGZoM9wl0P62abdLhgMNtN_JZElVuzAGGz7diql2jL8qDtVie0J7og2A4oK76w_nP0sYQqFhoXuBDXzrZLl4FLpW6SnX63V9dV0h0i-AmgaJa7ItK-8EpnswvB45Afb89mM7WPHQP7jHZnMVxVetMAwf6D6ummhLSE4aX7RPIM-8xT8cAOZ15kDJQ3fjUQYbdKa9JR1GoumIEp-TYcYdOZL9WqOYyAJDONY"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="flex-1 p-6 overflow-y-auto space-y-6">
+<!-- Quick Stats Bento -->
+<div class="grid grid-cols-12 gap-4">
+<div class="col-span-8 bg-surface-container-low p-6 flex flex-col justify-between min-h-[160px]">
+<div>
+<h1 class="text-3xl font-headline font-bold text-on-surface tracking-tight">Shortcut Repository</h1>
+<p class="text-on-surface-variant/60 mt-1 max-w-md font-body text-sm">Managing 1,284 precision commands across 14 synchronized applications.</p>
+</div>
+<div class="flex gap-8 mt-6">
+<div>
+<div class="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant/40">Total Efficiency</div>
+<div class="text-xl font-headline font-semibold text-secondary">+24%</div>
+</div>
+<div>
+<div class="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant/40">Sync Status</div>
+<div class="text-xl font-headline font-semibold text-primary flex items-center gap-2">
+<span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+                                    Active
+                                </div>
+</div>
+</div>
+</div>
+<div class="col-span-4 bg-gradient-to-br from-surface-container-high to-surface-container-lowest p-6 border border-outline-variant/5">
+<div class="flex justify-between items-start">
+<div class="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant/40">Master Trigger</div>
+<span class="material-symbols-outlined text-secondary text-sm">bolt</span>
+</div>
+<div class="mt-4 flex items-center gap-2">
+<span class="px-2 py-1 bg-surface-container-highest rounded kbd-shim font-mono text-sm text-on-surface-variant uppercase">Alt</span>
+<span class="text-on-surface-variant/40">+</span>
+<span class="px-2 py-1 bg-surface-container-highest rounded kbd-shim font-mono text-sm text-on-surface-variant uppercase">Space</span>
+</div>
+<div class="mt-6 text-xs text-on-surface-variant/50 leading-relaxed italic">
+                            "Global overlay activation for instant command execution."
+                        </div>
+</div>
+</div>
+<!-- Table Container -->
+<div class="bg-surface-container-low overflow-hidden">
+<table class="w-full border-collapse text-left">
+<thead>
+<tr class="bg-surface-container border-none">
+<th class="px-6 py-4 text-[10px] font-headline uppercase tracking-widest text-on-surface-variant/50 font-semibold group cursor-pointer hover:text-on-surface transition-colors">
+<div class="flex items-center gap-2">
+                                        Application
+                                        <span class="material-symbols-outlined text-xs group-hover:text-secondary">expand_more</span>
+</div>
+</th>
+<th class="px-6 py-4 text-[10px] font-headline uppercase tracking-widest text-on-surface-variant/50 font-semibold">Command Name</th>
+<th class="px-6 py-4 text-[10px] font-headline uppercase tracking-widest text-on-surface-variant/50 font-semibold">Shortcut</th>
+<th class="px-6 py-4 text-[10px] font-headline uppercase tracking-widest text-on-surface-variant/50 font-semibold">Context</th>
+<th class="px-6 py-4 text-[10px] font-headline uppercase tracking-widest text-on-surface-variant/50 font-semibold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-transparent">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-high transition-colors group">
+<td class="px-6 py-4 border-l-2 border-transparent group-hover:border-secondary">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-sm bg-[#1e1e1e] flex items-center justify-center border border-outline-variant/10">
+<span class="material-symbols-outlined text-[#007acc] text-sm" style="font-variation-settings: 'FILL' 1;">code</span>
+</div>
+<span class="text-sm font-medium text-on-surface">VS Code</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-sm text-on-surface/80">Command Palette</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1">
+<kbd class="px-2 py-0.5 bg-surface-container-highest rounded kbd-shim font-mono text-xs text-on-surface-variant">Ctrl</kbd>
+<span class="text-on-surface-variant/30 text-xs">+</span>
+<kbd class="px-2 py-0.5 bg-surface-container-highest rounded kbd-shim font-mono text-xs text-on-surface-variant">Shift</kbd>
+<span class="text-on-surface-variant/30 text-xs">+</span>
+<kbd class="px-2 py-0.5 bg-surface-container-highest rounded kbd-shim font-mono text-xs text-on-surface-variant">P</kbd>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-[10px] font-mono px-2 py-1 bg-surface-container-highest/50 text-tertiary rounded-full uppercase">Global</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-on-surface-variant/40 hover:text-secondary transition-colors">
+<span class="material-symbols-outlined text-sm">edit</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="bg-surface-container-lowest/30 hover:bg-surface-container-high transition-colors group">
+<td class="px-6 py-4 border-l-2 border-transparent group-hover:border-secondary">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-sm bg-[#333333] flex items-center justify-center border border-outline-variant/10">
+<span class="material-symbols-outlined text-[#FF7262] text-sm" style="font-variation-settings: 'FILL' 1;">palette</span>
+</div>
+<span class="text-sm font-medium text-on-surface">Figma</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-sm text-on-surface/80">Toggle UI Shell</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1">
+<kbd class="px-2 py-0.5 bg-surface-container-highest rounded kbd-shim font-mono text-xs text-on-surface-variant">Ctrl</kbd>
+<span class="text-on-surface-variant/30 text-xs">+</span>
+<kbd class="px-2 py-0.5 bg-surface-container-highest rounded kbd-shim font-mono text-xs text-on-surface-variant">\</kbd>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-[10px] font-mono px-2 py-1 bg-surface-container-highest/50 text-secondary rounded-full uppercase">Workspace</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-on-surface-variant/40 hover:text-secondary transition-colors">
+<span class="material-symbols-outlined text-sm">edit</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-high transition-colors group">
+<td class="px-6 py-4 border-l-2 border-transparent group-hover:border-secondary">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-sm bg-[#121212] flex items-center justify-center border border-outline-variant/10">
+<span class="material-symbols-outlined text-[#4FDBC8] text-sm" style="font-variation-settings: 'FILL' 1;">terminal</span>
+</div>
+<span class="text-sm font-medium text-on-surface">Terminal</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-sm text-on-surface/80">Clear Buffer</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1">
+<kbd class="px-2 py-0.5 bg-surface-container-highest rounded kbd-shim font-mono text-xs text-on-surface-variant">Ctrl</kbd>
+<span class="text-on-surface-variant/30 text-xs">+</span>
+<kbd class="px-2 py-0.5 bg-surface-container-highest rounded kbd-shim font-mono text-xs text-on-surface-variant">K</kbd>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-[10px] font-mono px-2 py-1 bg-surface-container-highest/50 text-primary rounded-full uppercase">Runtime</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-on-surface-variant/40 hover:text-secondary transition-colors">
+<span class="material-symbols-outlined text-sm">edit</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="bg-surface-container-lowest/30 hover:bg-surface-container-high transition-colors group">
+<td class="px-6 py-4 border-l-2 border-transparent group-hover:border-secondary">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-sm bg-[#222222] flex items-center justify-center border border-outline-variant/10">
+<span class="material-symbols-outlined text-[#E66132] text-sm" style="font-variation-settings: 'FILL' 1;">cloud_queue</span>
+</div>
+<span class="text-sm font-medium text-on-surface">Docker</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-sm text-on-surface/80">Prune Containers</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1">
+<kbd class="px-2 py-0.5 bg-surface-container-highest rounded kbd-shim font-mono text-xs text-on-surface-variant">Alt</kbd>
+<span class="text-on-surface-variant/30 text-xs">+</span>
+<kbd class="px-2 py-0.5 bg-surface-container-highest rounded kbd-shim font-mono text-xs text-on-surface-variant">Shift</kbd>
+<span class="text-on-surface-variant/30 text-xs">+</span>
+<kbd class="px-2 py-0.5 bg-surface-container-highest rounded kbd-shim font-mono text-xs text-on-surface-variant">X</kbd>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-[10px] font-mono px-2 py-1 bg-surface-container-highest/50 text-on-surface-variant/40 rounded-full uppercase">System</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-on-surface-variant/40 hover:text-secondary transition-colors">
+<span class="material-symbols-outlined text-sm">edit</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Footer Legend -->
+<div class="flex justify-between items-center px-4 py-2 border-t border-outline-variant/5">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 text-[10px] font-mono text-on-surface-variant/30">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                            ACTIVE SYNC
+                        </div>
+<div class="flex items-center gap-2 text-[10px] font-mono text-on-surface-variant/30">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+                            34 NEW CONFLICTS
+                        </div>
+</div>
+<div class="text-[10px] font-mono text-on-surface-variant/30 uppercase tracking-widest">
+                        Node v18.1.0 • Engine Core Optimized
+                    </div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
