@@ -182,15 +182,39 @@
 <!-- Shortcut Capture -->
 <div>
 <label class="block text-[10px] font-label font-bold tracking-[0.2em] text-outline mb-3 uppercase">Trigger Combination</label>
-<div class="w-full bg-surface-container-lowest p-6 flex flex-col items-center justify-center border border-outline-variant/10 group cursor-pointer hover:bg-surface-container-highest transition-colors">
-<div class="flex items-center gap-2 mb-4">
-<div class="kbd-shim px-3 py-1.5 bg-surface-container-highest rounded-sm border-b border-outline/30 text-secondary font-label text-sm font-bold">Shift</div>
-<span class="text-on-surface-variant/40 font-black">+</span>
-<div class="kbd-shim px-3 py-1.5 bg-surface-container-highest rounded-sm border-b border-outline/30 text-secondary font-label text-sm font-bold">Cmd</div>
-<span class="text-on-surface-variant/40 font-black">+</span>
-<div class="kbd-shim px-3 py-1.5 bg-surface-container-highest rounded-sm border-b border-outline/30 text-on-surface-variant font-label text-sm font-bold">P</div>
+<div class="w-full bg-surface-container-lowest p-6 flex flex-col gap-4 border border-outline-variant/10 group hover:bg-surface-container-highest transition-colors">
+<!-- Modifier Key Checkboxes -->
+<div class="flex flex-wrap gap-3">
+<label class="flex items-center gap-2 cursor-pointer group/checkbox">
+<input type="checkbox" class="modifier-checkbox" data-modifier="Ctrl" class="w-4 h-4 rounded border-outline-variant bg-surface-container-highest accent-secondary"/>
+<span class="text-sm font-label text-on-surface group-hover/checkbox:text-secondary transition-colors">Ctrl</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group/checkbox">
+<input type="checkbox" class="modifier-checkbox" data-modifier="Alt" class="w-4 h-4 rounded border-outline-variant bg-surface-container-highest accent-secondary"/>
+<span class="text-sm font-label text-on-surface group-hover/checkbox:text-secondary transition-colors">Alt</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group/checkbox">
+<input type="checkbox" class="modifier-checkbox" data-modifier="Shift" class="w-4 h-4 rounded border-outline-variant bg-surface-container-highest accent-secondary"/>
+<span class="text-sm font-label text-on-surface group-hover/checkbox:text-secondary transition-colors">Shift</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group/checkbox">
+<input type="checkbox" class="modifier-checkbox" data-modifier="Cmd" class="w-4 h-4 rounded border-outline-variant bg-surface-container-highest accent-secondary"/>
+<span class="text-sm font-label text-on-surface group-hover/checkbox:text-secondary transition-colors">Cmd</span>
+</label>
 </div>
-<p class="text-[10px] text-on-surface-variant/40 font-label tracking-wide text-center">PRESS KEY COMBINATION TO CAPTURE</p>
+
+<!-- Key Input Field -->
+<div class="flex flex-col gap-2">
+<label class="text-[10px] font-label text-on-surface-variant/60 tracking-wide uppercase">Main Key</label>
+<input type="text" id="keyInput" class="w-full bg-surface-container-highest border border-outline-variant/30 focus:border-secondary focus:ring-1 focus:ring-secondary rounded-sm px-3 py-2 text-on-surface placeholder:text-on-surface/20 font-label transition-all uppercase text-center text-lg font-bold" placeholder="Press or type key" maxlength="1"/>
+</div>
+
+<!-- Live Preview -->
+<div class="flex items-center justify-center gap-2 p-3 bg-surface-container rounded-sm border border-outline-variant/20">
+<div id="combinationPreview" class="flex items-center gap-2">
+<span class="text-on-surface-variant/40 font-label text-xs">Click modifiers and enter a key...</span>
+</div>
+</div>
 </div>
 </div>
 <!-- Description Field -->
@@ -237,4 +261,41 @@
 </div>
 </main>
 </div>
+<script>
+function updateCombinationDisplay() {
+  const modifiers = [];
+  const checkboxes = document.querySelectorAll('.modifier-checkbox');
+  const keyInput = document.getElementById('keyInput');
+  const preview = document.getElementById('combinationPreview');
+
+  checkboxes.forEach(checkbox => {
+    if (checkbox.checked) {
+      modifiers.push(checkbox.dataset.modifier);
+    }
+  });
+
+  let combinationHTML = '';
+
+  if (modifiers.length === 0 && !keyInput.value) {
+    combinationHTML = '<span class="text-on-surface-variant/40 font-label text-xs">Click modifiers and enter a key...</span>';
+  } else {
+    [...modifiers, keyInput.value].forEach((item, index) => {
+      if (index > 0) {
+        combinationHTML += '<span class="text-on-surface-variant/40 font-black">+</span>';
+      }
+      if (item) {
+        combinationHTML += `<div class="kbd-shim px-3 py-1.5 bg-surface-container-highest rounded-sm border-b border-outline/30 text-secondary font-label text-sm font-bold">${item}</div>`;
+      }
+    });
+  }
+
+  preview.innerHTML = combinationHTML;
+}
+
+document.querySelectorAll('.modifier-checkbox').forEach(checkbox => {
+  checkbox.addEventListener('change', updateCombinationDisplay);
+});
+
+document.getElementById('keyInput').addEventListener('input', updateCombinationDisplay);
+</script>
 </body></html>
