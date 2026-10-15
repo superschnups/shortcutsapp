@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rm -rf node_modules package-lock.json)",
+      "Bash(npm i *)",
+      "Bash(timeout 40 npm run tauri dev)",
+      "Bash(npm run *)",
+      "Bash(echo \"started with pid $!\")",
+      "Bash(python3 -m http.server 8080)"
+    ]
+  }
+}
